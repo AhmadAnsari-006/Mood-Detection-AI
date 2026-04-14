@@ -1,6 +1,6 @@
 # AI Mood Detection from Text
 
-![Status](https://img.shields.io/badge/Status-Completed-blue)
+![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
 ![Project](https://img.shields.io/badge/Type-ML%20Micro%20Project-purple)
 ![Language](https://img.shields.io/badge/Language-Python-yellow)
 ![Framework](https://img.shields.io/badge/Backend-Flask-black)
