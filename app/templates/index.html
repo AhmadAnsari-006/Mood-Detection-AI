@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Mood Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- 3D Water Waves -->
+<div class="waves">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
+
+<div class="container">
+    <h1>AI Mood Detection</h1>
+    <p class="subtitle">Emotion Intelligence System</p>
+
+    <textarea id="text-input" placeholder="Express your thoughts..."></textarea>
+
+    <button onclick="analyzeMood()">Analyze Mood</button>
+
+    <div id="loader" class="loader hidden"></div>
+
+    <div id="result-box" class="hidden">
+        <h3>AI Analysis</h3>
+        <p id="typing-text"></p>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
