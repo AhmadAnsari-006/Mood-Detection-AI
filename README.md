@@ -1,5 +1,17 @@
 # AI Mood Detection from Text
 
+![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
+![Project](https://img.shields.io/badge/Type-ML%20Micro%20Project-purple)
+![Language](https://img.shields.io/badge/Language-Python-yellow)
+![Framework](https://img.shields.io/badge/Backend-Flask-black)
+![ML](https://img.shields.io/badge/ML-Scikit--Learn-orange)
+![NLP](https://img.shields.io/badge/NLP-Text%20Processing-blueviolet)
+![Frontend](https://img.shields.io/badge/Frontend-HTML%20%7C%20CSS%20%7C%20JS-red)
+![Model](https://img.shields.io/badge/Model-TF--IDF%20%2B%20Classification-success)
+![Deployment](https://img.shields.io/badge/Deployment-Local-lightgrey)
+![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
+![License](https://img.shields.io/badge/License-Educational-informational)
+
 ## Project Overview
 
 **AI Mood Detection from Text** is a Machine Learning based web application that analyzes user-written text and predicts the emotional mood behind it. The system uses Natural Language Processing (NLP) techniques and a trained Machine Learning model to classify text into emotions such as **Happy, Sad, Angry, Fear, or Neutral**.
