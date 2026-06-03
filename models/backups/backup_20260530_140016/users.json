@@ -1,0 +1,18 @@
+[
+    {
+        "id": "72fff481-b10f-4d22-b8d8-ec03b12b5d94",
+        "username": "admin",
+        "email": "admin@moodai.dev",
+        "password": "e5bd86daad9e46aa6a065f724b265a6271cdfd9594a13639b56dbaace3b4d047",
+        "fullName": "Admin Developer",
+        "role": "developer"
+    },
+    {
+        "id": "6c093a81-36a2-4067-b288-af58d83db7b7",
+        "username": "testuser",
+        "email": "testuser@example.com",
+        "password": "ec468d0ef5f341c31e722862931a21f1c6365874728fc25bc03fff5d48da1450",
+        "fullName": "Test User",
+        "role": "user"
+    }
+]

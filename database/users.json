@@ -1,0 +1,26 @@
+[
+    {
+        "id": "cbe40b9b-7cb6-4a15-86d7-a17f81bb02a9",
+        "username": "admin",
+        "email": "admin@moodai.dev",
+        "password": "e5bd86daad9e46aa6a065f724b265a6271cdfd9594a13639b56dbaace3b4d047",
+        "fullName": "Admin Developer",
+        "role": "developer"
+    },
+    {
+        "id": "3475326b-6274-421e-a014-4e6785d21aee",
+        "username": "meta",
+        "email": "meta@moodai.dev",
+        "password": "8947362ccbbc21ff342b0e4b4307faa5dec72b623bb620e1ee3fe3b52be54390",
+        "fullName": "Meta-User Account",
+        "role": "meta-user"
+    },
+    {
+        "id": "6d183016-5c37-457c-bc4e-4c197ad0dbf4",
+        "username": "dark_knight",
+        "email": "ahmadsagebhopal@gmail.com",
+        "password": "b1970e5aff627cdfb848394e929672626321b111f41b3850320152326613499a",
+        "fullName": "Ahmad Ansari",
+        "role": "user"
+    }
+]

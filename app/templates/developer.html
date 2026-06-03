@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Access Portal - AI Mood Detection</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for beautiful rich developer analytics charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dark-theme dev-portal">
+    <!-- Background Waves -->
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Global Loading Overlay -->
+    <div id="global-loader" class="global-loader-overlay hidden">
+        <div class="loader"></div>
+        <p id="global-loader-text">Loading...</p>
+    </div>
+
+    <!-- ================= DEVELOPER LOGIN SCREEN ================= -->
+    <div class="container auth-container" id="dev-login-container">
+        <div class="auth-header">
+            <h1>Developer Access</h1>
+            <p class="subtitle">Secure Administrative Management</p>
+        </div>
+        
+        <div class="auth-card">
+            <form id="dev-login-form" class="auth-form" onsubmit="handleDevLogin(event)">
+                <h2>Verify Credentials</h2>
+                <p class="form-desc">Provide developer authentication key to manage the dataset</p>
+                
+                <div class="input-group">
+                    <i class="fas fa-user-shield input-icon"></i>
+                    <input type="text" id="dev-username" placeholder="Developer Username" required autocomplete="username">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-key input-icon"></i>
+                    <input type="password" id="dev-password" placeholder="Developer Password" required autocomplete="current-password">
+                    <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('dev-password', this)"></i>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="dev-signin-btn">
+                    <span class="btn-text">Authenticate</span>
+                    <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+                
+                <div class="form-footer">
+                    <a href="/" class="toggle-form-link"><i class="fas fa-arrow-left"></i> Return to Main App</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= DEVELOPER DASHBOARD SCREEN ================= -->
+    <div class="dev-dashboard-layout hidden" id="dev-dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="dev-sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-code-branch logo-icon"></i>
+                <div class="logo-title">
+                    <h2>MoodAI Dev</h2>
+                    <span>Access Portal</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="dev-avatar"><i class="fas fa-user-cog"></i></div>
+                <div class="user-details">
+                    <h3 id="dev-display-name">Developer</h3>
+                    <p id="dev-display-role">Administrator</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" onclick="switchTab('tab-overview', this)">
+                    <i class="fas fa-chart-line"></i> Overview & Charts
+                </a>
+                <a href="#" class="menu-item" onclick="switchTab('tab-queue', this)">
+                    <i class="fas fa-clipboard-list"></i> Feedback Queue <span class="badge" id="queue-badge">0</span>
+                </a>
+                <a href="#" class="menu-item" onclick="switchTab('tab-dataset', this)">
+                    <i class="fas fa-database"></i> Dataset Manager
+                </a>
+                <a href="#" class="menu-item" onclick="switchTab('tab-statements', this)">
+                    <i class="fas fa-quote-left"></i> Statements Log
+                </a>
+                <a href="#" class="menu-item" onclick="switchTab('tab-users', this)">
+                    <i class="fas fa-users-cog"></i> User Activity
+                </a>
+                <a href="#" class="menu-item" onclick="switchTab('tab-tools', this)">
+                    <i class="fas fa-tools"></i> Developer Tools
+                </a>
+                <a href="#" class="menu-item" onclick="switchTab('tab-audit', this)">
+                    <i class="fas fa-shield-alt"></i> Audits & Backups
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="/" class="footer-btn return-btn"><i class="fas fa-external-link-alt"></i> Main App</a>
+                <button onclick="handleDevLogout()" class="footer-btn logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Panel -->
+        <main class="dev-workspace">
+            
+            <!-- Tab 1: Overview & Analytics -->
+            <section id="tab-overview" class="workspace-tab">
+                <div class="tab-header">
+                    <h1>Overview & Analytics</h1>
+                    <p>Live summary of user predictions, validation rates, and corrections</p>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon blue"><i class="fas fa-users"></i></div>
+                        <div class="metric-info">
+                            <h3 id="metric-users">0</h3>
+                            <p>Total Registered Users</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon green"><i class="fas fa-user-check"></i></div>
+                        <div class="metric-info">
+                            <h3 id="metric-active">0</h3>
+                            <p>Active User Sessions</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon purple"><i class="fas fa-brain"></i></div>
+                        <div class="metric-info">
+                            <h3 id="metric-predictions">0</h3>
+                            <p>Logged Predictions</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon yellow"><i class="fas fa-undo"></i></div>
+                        <div class="metric-info">
+                            <h3 id="metric-corrections">0</h3>
+                            <p>User Corrections</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon teal"><i class="fas fa-star"></i></div>
+                        <div class="metric-info">
+                            <h3 id="metric-accuracy">0.0%</h3>
+                            <p>User-Verified Accuracy</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon orange"><i class="fas fa-folder-open"></i></div>
+                        <div class="metric-info">
+                            <h3 id="metric-dataset">0</h3>
+                            <p>Verified Dataset Size</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rich Analytics Panels -->
+                <div class="analytics-panels">
+                    <div class="analytics-card double-width">
+                        <h3>Model Accuracy Trends</h3>
+                        <p class="panel-subtitle">Daily user feedback verification scores</p>
+                        <div class="chart-container">
+                            <canvas id="accuracyTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Accuracy Breakdown</h3>
+                        <div class="accuracy-gauge-wrapper">
+                            <div class="accuracy-circle">
+                                <div class="circle-val" id="accuracy-gauge-text">0%</div>
+                                <div class="circle-lbl">Verified</div>
+                            </div>
+                            <ul class="accuracy-breakdown-details">
+                                <li>Weekly Accuracy: <span id="week-acc">0%</span></li>
+                                <li>Corrections Ratio: <span id="corr-ratio">0%</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Emotion Distributions</h3>
+                        <p class="panel-subtitle">Predicted classes volume</p>
+                        <div class="chart-container">
+                            <canvas id="emotionDistChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card double-width">
+                        <h3>Common Model Mismatches</h3>
+                        <p class="panel-subtitle">Frequent prediction vs correction pairs</p>
+                        <div class="chart-container">
+                            <canvas id="mismatchChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Feedback Review Queue -->
+            <section id="tab-queue" class="workspace-tab hidden">
+                <div class="tab-header">
+                    <h1>Feedback Review Queue</h1>
+                    <p>Review predictions marked incorrect by users. Verify correct labels before inclusion in the dataset.</p>
+                </div>
+                
+                <div class="queue-container">
+                    <div id="queue-empty" class="empty-state">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h3>Feedback Queue is Empty!</h3>
+                        <p>No user corrections are currently pending verification.</p>
+                    </div>
+                    <div id="queue-list" class="queue-grid">
+                        <!-- Pending Correction Cards get rendered here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Dataset Manager -->
+            <section id="tab-dataset" class="workspace-tab hidden">
+                <div class="tab-header">
+                    <div class="header-action-group">
+                        <div>
+                            <h1>Verified Dataset Manager</h1>
+                            <p>Manage verified user interactions and approved corrections compilation dataset.</p>
+                        </div>
+                        <div class="header-btns">
+                            <a href="/api/dev/dataset/export" class="action-btn export-btn"><i class="fas fa-file-export"></i> Export JSON</a>
+                            <label class="action-btn import-btn" for="import-file-input">
+                                <i class="fas fa-file-import"></i> Import JSON
+                                <input type="file" id="import-file-input" class="hidden" accept=".json" onchange="handleDatasetImport(event)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="dataset-search" placeholder="Search statements..." oninput="filterDataset()">
+                    </div>
+                    <div class="filter-box">
+                        <select id="dataset-filter-emotion" onchange="filterDataset()">
+                            <option value="">All Emotions</option>
+                            <option value="Joy">Joy</option>
+                            <option value="Sadness">Sadness</option>
+                            <option value="Anger">Anger</option>
+                            <option value="Fear">Fear</option>
+                            <option value="Surprise">Surprise</option>
+                            <option value="Disgust">Disgust</option>
+                            <option value="Neutral">Neutral</option>
+                        </select>
+                        <select id="dataset-filter-source" onchange="filterDataset()">
+                            <option value="">All Sources</option>
+                            <option value="prediction">Predictions</option>
+                            <option value="correction">Corrections</option>
+                            <option value="import">Imports</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="dev-table">
+                        <thead>
+                            <tr>
+                                <th>Statement / Sentence</th>
+                                <th style="width:150px">Verified Emotion</th>
+                                <th style="width:120px">Source</th>
+                                <th style="width:200px">Timestamp</th>
+                                <th style="width:150px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataset-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 4: User Statements Log -->
+            <section id="tab-statements" class="workspace-tab hidden">
+                <div class="tab-header">
+                    <div class="header-action-group">
+                        <div>
+                            <h1>User Statements Log</h1>
+                            <p>Full auditing trail of all user prediction inputs and their verification logs</p>
+                        </div>
+                        <div class="header-btns">
+                            <a href="/api/dev/statements/export" class="action-btn export-btn"><i class="fas fa-file-export"></i> Export Logs</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="statements-search" placeholder="Search inputs..." oninput="filterStatements()">
+                    </div>
+                    <div class="filter-box">
+                        <select id="statements-filter-status" onchange="filterStatements()">
+                            <option value="">All Statuses</option>
+                            <option value="Verified">Verified Correct</option>
+                            <option value="Corrected">Corrected</option>
+                            <option value="Unreviewed">Unreviewed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="dev-table">
+                        <thead>
+                            <tr>
+                                <th>Statement / Input Sentence</th>
+                                <th style="width:120px">Predicted</th>
+                                <th style="width:120px">Corrected</th>
+                                <th style="width:120px">User</th>
+                                <th style="width:180px">Status</th>
+                                <th style="width:150px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statements-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 5: User Activity -->
+            <section id="tab-users" class="workspace-tab hidden">
+                <div class="tab-header">
+                    <h1>User Activity Monitor</h1>
+                    <p>Track registered users, sessions, activity timestamps, and participation</p>
+                </div>
+
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="users-search" placeholder="Search usernames..." oninput="filterUsers()">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="dev-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Active Session</th>
+                                <th>Last Interaction</th>
+                                <th>Total Predictions</th>
+                                <th>Total Corrections</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab 6: Developer Tools -->
+            <section id="tab-tools" class="workspace-tab hidden">
+                <div class="tab-header">
+                    <h1>Developer Tools Section</h1>
+                    <p>Trigger dataset compiler operations and inspect deep learning pipeline placeholders</p>
+                </div>
+
+                <div class="tools-grid">
+                    <div class="tool-action-card">
+                        <div class="tool-desc">
+                            <h3><i class="fas fa-magic"></i> Compile Verified Dataset</h3>
+                            <p>Trigger the dataset compiler to read all verified predictions and approved corrections, remove duplicates, filter invalid entries, and output the target dataset.</p>
+                        </div>
+                        <button onclick="triggerDatasetCompiler()" class="tool-btn"><i class="fas fa-sync"></i> Rebuild Dataset</button>
+                    </div>
+
+                    <div class="tool-action-card placeholder-card">
+                        <div class="tool-desc">
+                            <h3><i class="fas fa-sync-alt"></i> Model Retraining Pipeline</h3>
+                            <p class="placeholder-tag">Future Placeholder</p>
+                            <p>Start model training on the newly compiled `verified_dataset.json` combined with academic baseline dataset. Automates SVM parameter searching and grid searches.</p>
+                        </div>
+                        <button disabled class="tool-btn disabled"><i class="fas fa-ban"></i> Retrain Model</button>
+                    </div>
+
+                    <div class="tool-action-card placeholder-card">
+                        <div class="tool-desc">
+                            <h3><i class="fas fa-history"></i> Dataset Versioning</h3>
+                            <p class="placeholder-tag">Future Placeholder</p>
+                            <p>Commit current dataset snapshot as a semantic version (e.g., v1.1.0) and track file differences against production releases.</p>
+                        </div>
+                        <button disabled class="tool-btn disabled"><i class="fas fa-ban"></i> Tag Version</button>
+                    </div>
+
+                    <div class="tool-action-card placeholder-card">
+                        <div class="tool-desc">
+                            <h3><i class="fas fa-balance-scale"></i> Dataset Comparison</h3>
+                            <p class="placeholder-tag">Future Placeholder</p>
+                            <p>Compare lexical coverage, label distribution, and vocabulary overlaps between active dataset configurations and academic baselines.</p>
+                        </div>
+                        <button disabled class="tool-btn disabled"><i class="fas fa-ban"></i> Run Comparison</button>
+                    </div>
+
+                    <div class="tool-action-card placeholder-card">
+                        <div class="tool-desc">
+                            <h3><i class="fas fa-tachometer-alt"></i> Performance Benchmarking</h3>
+                            <p class="placeholder-tag">Future Placeholder</p>
+                            <p>Run test inference suites on validation datasets to calculate accuracy, recall, and F1 confidence score shifts prior to production releases.</p>
+                        </div>
+                        <button disabled class="tool-btn disabled"><i class="fas fa-ban"></i> Run Benchmark</button>
+                    </div>
+
+                    <div class="tool-action-card placeholder-card">
+                        <div class="tool-desc">
+                            <h3><i class="fas fa-rocket"></i> Model Deployment</h3>
+                            <p class="placeholder-tag">Future Placeholder</p>
+                            <p>Promote compiled classification models from candidate staging build to live production endpoint cache without service downtime.</p>
+                        </div>
+                        <button disabled class="tool-btn disabled"><i class="fas fa-ban"></i> Deploy Model</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 7: Audits & Backups -->
+            <section id="tab-audit" class="workspace-tab hidden">
+                <div class="tab-header">
+                    <div class="header-action-group">
+                        <div>
+                            <h1>Audit Logs & Dataset Backups</h1>
+                            <p>Track administrator actions and restore database snapshots in case of dataset tampering</p>
+                        </div>
+                        <button onclick="handleCreateBackup()" class="action-btn backup-btn"><i class="fas fa-shield-virus"></i> Create Backup Snapshot</button>
+                    </div>
+                </div>
+
+                <div class="audit-grid">
+                    <!-- Logs Section -->
+                    <div class="audit-column">
+                        <h3>Security Audit Logs</h3>
+                        <p class="panel-subtitle">Latest administrative actions</p>
+                        <div class="log-timeline-container" id="logs-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Backups Section -->
+                    <div class="audit-column">
+                        <h3>Dataset Backups</h3>
+                        <p class="panel-subtitle">Available point-in-time restore points</p>
+                        <div class="table-wrapper">
+                            <table class="dev-table">
+                                <thead>
+                                    <tr>
+                                        <th>Backup Name</th>
+                                        <th>Created At</th>
+                                        <th>Files</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="backups-table-body">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ================= DIALOG MODALS ================= -->
+    <!-- Edit Item Modal -->
+    <div id="edit-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Edit Record</h3>
+                <button onclick="closeEditModal()" class="close-modal-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-record-id">
+                <input type="hidden" id="edit-record-type"> <!-- 'dataset' or 'statement' -->
+                
+                <div class="modal-input-group">
+                    <label for="edit-sentence-input">Statement / Sentence</label>
+                    <textarea id="edit-sentence-input" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-input-group">
+                    <label id="edit-label-name" for="edit-emotion-select">Verified Emotion</label>
+                    <select id="edit-emotion-select">
+                        <option value="Joy">Joy</option>
+                        <option value="Sadness">Sadness</option>
+                        <option value="Anger">Anger</option>
+                        <option value="Fear">Fear</option>
+                        <option value="Surprise">Surprise</option>
+                        <option value="Disgust">Disgust</option>
+                        <option value="Neutral">Neutral</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeEditModal()" class="modal-btn cancel-btn">Cancel</button>
+                <button onclick="saveRecordEdit()" class="modal-btn confirm-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Queue Correction Edit Modal -->
+    <div id="queue-edit-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Edit Correction Label</h3>
+                <button onclick="closeQueueEditModal()" class="close-modal-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="queue-edit-id">
+                <div class="modal-input-group">
+                    <label>Statement</label>
+                    <p id="queue-edit-sentence-display" class="modal-static-text"></p>
+                </div>
+                <div class="modal-input-group">
+                    <label>Predicted Emotion</label>
+                    <p id="queue-edit-predicted-display" class="modal-static-text"></p>
+                </div>
+                <div class="modal-input-group">
+                    <label for="queue-edit-emotion-select">Proposed Correct Emotion</label>
+                    <select id="queue-edit-emotion-select">
+                        <option value="Joy">Joy</option>
+                        <option value="Sadness">Sadness</option>
+                        <option value="Anger">Anger</option>
+                        <option value="Fear">Fear</option>
+                        <option value="Surprise">Surprise</option>
+                        <option value="Disgust">Disgust</option>
+                        <option value="Neutral">Neutral</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeQueueEditModal()" class="modal-btn cancel-btn">Cancel</button>
+                <button onclick="saveQueueEditApprove()" class="modal-btn confirm-btn">Approve Correction</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Resource -->
+    <script src="{{ url_for('static', filename='dev_script.js') }}"></script>
+</body>
+</html>
