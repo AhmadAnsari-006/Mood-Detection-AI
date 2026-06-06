@@ -14,13 +14,5 @@
         "password": "8947362ccbbc21ff342b0e4b4307faa5dec72b623bb620e1ee3fe3b52be54390",
         "fullName": "Meta-User Account",
         "role": "meta-user"
-    },
-    {
-        "id": "3ba1b084-8663-45c8-9c33-7a756e4e3cc7",
-        "username": "ahmadsagebhopal@gmail.com",
-        "email": "ahmadsagebhopal@gmail.com",
-        "password": "6f8ed7b7c049c77debc94420a90f0bd108ec0caf9761c37ec18983eec2c785b5",
-        "fullName": "Ahmad Shoaib Ansari",
-        "role": "user"
-    }
+    }    
 ]

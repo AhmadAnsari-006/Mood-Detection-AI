@@ -1,5 +1,23 @@
 [
     {
+        "id": "d4b49269-887a-4700-a529-acb48301148b",
+        "timestamp": "2026-06-06T15:34:46.905204",
+        "username": "admin",
+        "action": "developer_login",
+        "details": {
+            "message": "Developer logged in successfully"
+        }
+    },
+    {
+        "id": "d379072a-e8f6-4b64-84d4-7241d47e999f",
+        "timestamp": "2026-06-06T15:34:21.046393",
+        "username": "admin",
+        "action": "developer_logout",
+        "details": {
+            "message": "Developer logged out successfully"
+        }
+    },
+    {
         "id": "672ed977-a590-48a0-b997-328f5b566158",
         "timestamp": "2026-06-06T14:58:13.875040",
         "username": "admin",
