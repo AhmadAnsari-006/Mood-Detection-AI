@@ -1,16 +1,27 @@
 [
     {
-        "id": "df0c7802-3a70-4e24-b79a-d6d8ee80d558",
-        "timestamp": "2026-05-30T16:14:16.037456",
+        "id": "672ed977-a590-48a0-b997-328f5b566158",
+        "timestamp": "2026-06-06T14:58:13.875040",
         "username": "admin",
-        "action": "run_verified_dataset_builder",
+        "action": "developer_login",
         "details": {
-            "message": "Manual trigger of verified dataset compiler"
+            "message": "Developer logged in successfully"
         }
     },
     {
-        "id": "b0f0e109-938c-40cd-a836-738eabd8ffcc",
-        "timestamp": "2026-05-30T16:11:59.763102",
+        "id": "7ac7ea94-ce62-4aee-bebc-3c335b066f64",
+        "timestamp": "2026-06-06T14:57:01.369049",
+        "username": "admin",
+        "action": "approve_correction",
+        "details": {
+            "id": "178c7257-7aba-46d2-9002-cd4c4ea14481",
+            "sentence": "hello my name is Ahmed",
+            "emotion": "Neutral"
+        }
+    },
+    {
+        "id": "c80349f8-5505-4961-a867-2dca9fcaf55a",
+        "timestamp": "2026-06-06T14:56:32.127520",
         "username": "admin",
         "action": "developer_login",
         "details": {

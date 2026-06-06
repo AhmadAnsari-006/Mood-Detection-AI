@@ -1,1 +1,62 @@
-[]
+[
+    {
+        "id": "aeb4e54b-1dbc-4a14-b269-fcee5daf41cc",
+        "userId": "3ba1b084-8663-45c8-9c33-7a756e4e3cc7",
+        "username": "ahmadsagebhopal@gmail.com",
+        "sentence": "my name is aHMAD",
+        "predictedEmotion": "joy",
+        "confidence": 0.5393,
+        "timestamp": "2026-06-04T13:53:08.005385",
+        "verified": null
+    },
+    {
+        "id": "a998f3a4-c64f-4d37-a38f-abcd06212a4e",
+        "userId": "212f7a02-9d4d-4773-8061-874db4c5aee7",
+        "username": "meta",
+        "sentence": "I am happy",
+        "predictedEmotion": "joy",
+        "confidence": 0.9955,
+        "timestamp": "2026-06-06T14:27:25.963715",
+        "verified": true
+    },
+    {
+        "id": "d2cd0323-34b5-4dc1-be69-0682abacb670",
+        "userId": "212f7a02-9d4d-4773-8061-874db4c5aee7",
+        "username": "meta",
+        "sentence": "my day was not good",
+        "predictedEmotion": "joy",
+        "confidence": 0.4661,
+        "timestamp": "2026-06-06T14:28:03.578628",
+        "verified": null
+    },
+    {
+        "id": "61d718db-8a1e-44af-8fb3-0cee475107c2",
+        "userId": "3ba1b084-8663-45c8-9c33-7a756e4e3cc7",
+        "username": "ahmadsagebhopal@gmail.com",
+        "sentence": "i am feeling neutral",
+        "predictedEmotion": "joy",
+        "confidence": 0.3855,
+        "timestamp": "2026-06-06T14:31:10.107066",
+        "verified": null
+    },
+    {
+        "id": "a43f4d26-804d-4cd2-945f-f0205dfb9dce",
+        "userId": "212f7a02-9d4d-4773-8061-874db4c5aee7",
+        "username": "meta",
+        "sentence": "hello my name is Ahmed",
+        "predictedEmotion": "sadness",
+        "confidence": 0.6452,
+        "timestamp": "2026-06-06T14:36:33.129607",
+        "verified": false
+    },
+    {
+        "id": "74fb04ca-37e9-4125-9c2d-b12778931652",
+        "userId": "3ba1b084-8663-45c8-9c33-7a756e4e3cc7",
+        "username": "ahmadsagebhopal@gmail.com",
+        "sentence": "I am angry",
+        "predictedEmotion": "anger",
+        "confidence": 0.9996,
+        "timestamp": "2026-06-06T14:58:58.371013",
+        "verified": null
+    }
+]

@@ -31,3 +31,32 @@ def predict_mood(text):
     vec = vectorizer.transform([cleaned])
     pred = model.predict(vec)[0]
     return pred
+
+def predict_mood_with_confidence(text):
+    model, vectorizer = load_prediction_assets()
+    
+    # Clean text
+    cleaned = clean_text(text)
+    if not cleaned:
+        return "neutral", 0.5
+    
+    # Vectorize
+    vec = vectorizer.transform([cleaned])
+    
+    # Predict
+    pred = model.predict(vec)[0]
+    
+    # Extract confidence
+    if hasattr(model, "predict_proba"):
+        probas = model.predict_proba(vec)[0]
+        classes = list(model.classes_)
+        if pred in classes:
+            idx = classes.index(pred)
+            confidence = probas[idx]
+        else:
+            confidence = max(probas)
+    else:
+        confidence = 0.85
+        
+    return pred, float(confidence)
+

@@ -2,8 +2,15 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI Mood Detection</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <!-- Google Fonts & FontAwesome Icons -->
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Separate Modular CSS Files -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     </head>
     <body>
         <!-- 3D Water Waves -->
@@ -13,22 +20,166 @@
             <div class="wave"></div>
         </div>
 
-        <div class="container">
-            <h1>AI Mood Detection</h1>
-            <p class="subtitle">Emotion Intelligence System</p>
+        <!-- Floating Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+            <i class="fas fa-sun"></i>
+        </button>
 
-            <textarea id="text-input" placeholder="Express your thoughts..."></textarea>
+        <!-- ================= STARTUP PORTAL SCREEN ================= -->
+        <div id="startup-screen" class="startup-wrapper">
+            <div class="startup-card animate-slide-up">
+                <div class="startup-header">
+                    <div class="logo-large"><i class="fas fa-brain"></i></div>
+                    <h1>MoodAI Portal</h1>
+                    <p>Emotion Intelligence System</p>
+                </div>
 
-            <button onclick="analyzeMood()">Analyze Mood</button>
+                <!-- Sign In Form Panel -->
+                <div id="startup-signin-container" class="auth-form-container">
+                    <h2>Sign In to Account</h2>
+                    <form onsubmit="handleSignin(event)" class="auth-inputs">
+                        <div class="input-field-group">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="signin-username" placeholder="Username or Email" required autocomplete="username">
+                        </div>
+                        <div class="input-field-group">
+                            <i class="fas fa-key input-icon"></i>
+                            <input type="password" id="signin-password" placeholder="Password" required autocomplete="current-password">
+                            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('signin-password', this)" title="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn-submit">Sign In</button>
+                    </form>
+                    <p class="switch-auth-mode">Don't have an account? <a href="#" onclick="showAuthCard('signup')">Sign Up</a></p>
+                </div>
 
-            <div id="loader" class="loader hidden"></div>
+                <!-- Sign Up Form Panel -->
+                <div id="startup-signup-container" class="auth-form-container hidden">
+                    <h2>Create New Account</h2>
+                    <form onsubmit="handleSignup(event)" class="auth-inputs">
+                        <div class="input-field-group">
+                            <i class="fas fa-id-card input-icon"></i>
+                            <input type="text" id="signup-fullname" placeholder="Full Name" required autocomplete="name">
+                        </div>
+                        <div class="input-field-group">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="signup-username" placeholder="Username" required autocomplete="username">
+                        </div>
+                        <div class="input-field-group">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="signup-email" placeholder="Email Address" required autocomplete="email">
+                        </div>
+                        <div class="input-field-group">
+                            <i class="fas fa-key input-icon"></i>
+                            <input type="password" id="signup-password" placeholder="Password" required autocomplete="new-password">
+                            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('signup-password', this)" title="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn-submit">Sign Up</button>
+                    </form>
+                    <p class="switch-auth-mode">Already have an account? <a href="#" onclick="showAuthCard('signin')">Sign In</a></p>
+                </div>
 
-            <div id="result-box" class="hidden">
-                <h3>AI Analysis</h3>
-                <p id="typing-text"></p>
+                <div class="divider">OR</div>
+
+                <!-- Alternative Entry Options -->
+                <div class="alt-actions">
+                    <button class="btn-guest-login" onclick="handleGuestLogin()">
+                        <i class="fas fa-user-secret"></i> Guest Login
+                    </button>
+                    <a href="/developer" class="btn-dev-access" target="_blank">
+                        <i class="fas fa-code"></i> Developer Access
+                    </a>
+                </div>
             </div>
         </div>
 
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <!-- ================= MAIN MODEL WORKSPACE ================= -->
+        <div id="app-screen" class="hidden">
+            <!-- Top Navigation Bar -->
+            <header class="top-bar">
+                <div class="logo" onclick="returnToStartup()">
+                    <i class="fas fa-brain"></i>
+                    <span>MoodAI</span>
+                </div>
+                <nav class="nav-links">
+                    <span id="session-user-info" class="user-info hidden"></span>
+                    <a href="#" id="auth-signout-link" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                </nav>
+            </header>
+
+            <!-- Main Container -->
+            <div class="container animate-slide-up">
+                <h1>AI Mood Detection</h1>
+                <p class="subtitle">Express your feelings, detect your tone</p>
+
+                <div class="input-wrapper">
+                    <textarea id="text-input" placeholder="Type or paste your thoughts here to analyze mood..."></textarea>
+                    <div class="input-toolbar">
+                        <!-- File Upload option with text label -->
+                        <label class="file-upload-label" title="Upload a text file">
+                            <i class="fas fa-file-upload"></i>
+                            <span>Upload your files</span>
+                            <input type="file" id="file-upload" accept=".txt" onchange="handleFileUpload(event)">
+                        </label>
+                        
+                        <!-- Voice Transcription mic button -->
+                        <button id="mic-btn" class="toolbar-btn hidden" title="Record Voice (Speech-to-Text)" onclick="toggleSpeechRecording()">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <span id="mic-status" class="mic-status hidden">
+                            <span class="mic-wave-container">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </span>
+                            Listening…
+                        </span>
+                    </div>
+                </div>
+
+                <button class="analyze-btn" onclick="analyzeMood()">Analyze Mood</button>
+
+                <div id="loader" class="loader hidden"></div>
+
+                <div id="result-box" class="hidden">
+                    <h3>AI Analysis</h3>
+                    <p id="typing-text"></p>
+                    
+                    <!-- Feedback Verification Panel -->
+                    <div id="feedback-panel" class="feedback-panel hidden">
+                        <p class="feedback-prompt">Was this analysis correct?</p>
+                        <div class="feedback-buttons">
+                            <button onclick="submitFeedback(true)" id="feedback-yes-btn" class="btn-feedback correct-btn"><i class="fas fa-check"></i> Yes</button>
+                            <button onclick="showCorrectionSelect()" id="feedback-no-btn" class="btn-feedback incorrect-btn"><i class="fas fa-times"></i> No</button>
+                        </div>
+                        <div id="correction-select-container" class="correction-select-container hidden">
+                            <p class="feedback-prompt">Select correct emotion:</p>
+                            <select id="correct-emotion-select">
+                                <option value="Joy">Joy</option>
+                                <option value="Sadness">Sadness</option>
+                                <option value="Anger">Anger</option>
+                                <option value="Fear">Fear</option>
+                                <option value="Surprise">Surprise</option>
+                                <option value="Disgust">Disgust</option>
+                                <option value="Neutral">Neutral</option>
+                            </select>
+                            <button onclick="submitFeedback(false)" class="btn-submit-correction">Submit Correction</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Anonymous Guest Prompt -->
+                    <div id="anonymous-feedback-prompt" class="anonymous-feedback-prompt hidden">
+                        <p>💡 <span onclick="returnToStartup()" style="text-decoration: underline; cursor: pointer;">Sign in</span> to verify predictions or submit feedback!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>

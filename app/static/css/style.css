@@ -1,0 +1,179 @@
+/* ==========================================================================
+   MoodAI - Core Global Styles & Background Animations
+   ========================================================================== */
+
+:root {
+    --body-bg: #3e123f;
+    --wave-bg-1: rgb(181, 126, 220);
+    --wave-bg-2: rgb(170, 110, 210);
+    --wave-bg-3: rgba(130, 80, 180, 0.6);
+    --text-color: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --card-bg: rgba(255, 255, 255, 0.07);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --input-bg: rgba(255, 255, 255, 0.08);
+    --input-border: rgba(255, 255, 255, 0.15);
+    --input-focus-bg: rgba(255, 255, 255, 0.12);
+    --input-icon-color: rgba(255, 255, 255, 0.5);
+    --divider-color: rgba(255, 255, 255, 0.35);
+    --divider-border: rgba(255, 255, 255, 0.12);
+    --btn-guest-bg: rgba(255, 255, 255, 0.05);
+    --btn-guest-border: rgba(255, 255, 255, 0.2);
+    --btn-guest-hover-bg: rgba(255, 255, 255, 0.12);
+    --btn-guest-hover-border: rgba(255, 255, 255, 0.3);
+    --btn-dev-bg: linear-gradient(135deg, rgba(211, 66, 255, 0.15), rgba(171, 49, 219, 0.15));
+    --btn-dev-hover-bg: linear-gradient(135deg, rgba(211, 66, 255, 0.3), rgba(171, 49, 219, 0.3));
+    --btn-dev-color: #ff8efb;
+    --switch-auth-color: #ff8efb;
+    --top-bar-bg: rgba(255, 255, 255, 0.05);
+    --top-bar-border: rgba(255, 255, 255, 0.1);
+    --nav-link-color: rgba(255, 255, 255, 0.8);
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+    --user-info-bg: rgba(255, 255, 255, 0.08);
+    --user-info-border: rgba(255, 255, 255, 0.12);
+    --result-box-bg: rgba(255, 255, 255, 0.1);
+    --result-box-border: rgba(255, 255, 255, 0.08);
+    --feedback-border: rgba(255, 255, 255, 0.08);
+    --feedback-prompt: rgba(255, 255, 255, 0.7);
+    --anon-prompt-color: rgba(255, 255, 255, 0.55);
+}
+
+:root.light-theme {
+    --body-bg: #f8eff9;
+    --wave-bg-1: rgb(238, 216, 248);
+    --wave-bg-2: rgb(228, 200, 242);
+    --wave-bg-3: rgba(200, 170, 222, 0.4);
+    --text-color: #2b082e;
+    --text-muted: rgba(62, 18, 63, 0.7);
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --card-border: rgba(62, 18, 63, 0.15);
+    --input-bg: rgba(62, 18, 63, 0.05);
+    --input-border: rgba(62, 18, 63, 0.2);
+    --input-focus-bg: rgba(62, 18, 63, 0.08);
+    --input-icon-color: rgba(62, 18, 63, 0.6);
+    --divider-color: rgba(62, 18, 63, 0.5);
+    --divider-border: rgba(62, 18, 63, 0.2);
+    --btn-guest-bg: rgba(62, 18, 63, 0.05);
+    --btn-guest-border: rgba(62, 18, 63, 0.2);
+    --btn-guest-hover-bg: rgba(62, 18, 63, 0.1);
+    --btn-guest-hover-border: rgba(62, 18, 63, 0.35);
+    --btn-dev-bg: linear-gradient(135deg, rgba(171, 49, 219, 0.08), rgba(211, 66, 255, 0.08));
+    --btn-dev-hover-bg: linear-gradient(135deg, rgba(171, 49, 219, 0.18), rgba(211, 66, 255, 0.18));
+    --btn-dev-color: #ab31db;
+    --switch-auth-color: #ab31db;
+    --top-bar-bg: rgba(255, 255, 255, 0.85);
+    --top-bar-border: rgba(62, 18, 63, 0.15);
+    --nav-link-color: #3e123f;
+    --nav-link-hover-bg: rgba(62, 18, 63, 0.08);
+    --user-info-bg: rgba(62, 18, 63, 0.06);
+    --user-info-border: rgba(62, 18, 63, 0.15);
+    --result-box-bg: rgba(255, 255, 255, 0.9);
+    --result-box-border: rgba(62, 18, 63, 0.12);
+    --feedback-border: rgba(62, 18, 63, 0.12);
+    --feedback-prompt: rgba(62, 18, 63, 0.85);
+    --anon-prompt-color: rgba(62, 18, 63, 0.7);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Outfit', 'Segoe UI', sans-serif;
+    background: var(--body-bg);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* 🌊 3D WATER WAVES BACKGROUND */
+.waves {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: var(--wave-bg-1);
+    border-radius: 43%;
+    animation: waveMove 10s infinite linear;
+    transition: background 0.4s ease;
+}
+
+.wave:nth-child(2) {
+    background: var(--wave-bg-2);
+    animation-duration: 15s;
+}
+
+.wave:nth-child(3) {
+    background: var(--wave-bg-3);
+    animation-duration: 20s;
+}
+
+@keyframes waveMove {
+    0% { transform: rotate(0deg) translateY(0); }
+    100% { transform: rotate(360deg) translateY(-20px); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Slide Up Animation */
+.animate-slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🌓 FLOATING THEME TOGGLE BUTTON */
+.theme-toggle-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    border-color: #d342ff;
+}

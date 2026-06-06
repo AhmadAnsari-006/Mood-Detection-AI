@@ -1,6 +1,6 @@
 [
     {
-        "id": "cbe40b9b-7cb6-4a15-86d7-a17f81bb02a9",
+        "id": "766509a9-1cc4-4e97-96bd-5b2a350dcc37",
         "username": "admin",
         "email": "admin@moodai.dev",
         "password": "e5bd86daad9e46aa6a065f724b265a6271cdfd9594a13639b56dbaace3b4d047",
@@ -8,7 +8,7 @@
         "role": "developer"
     },
     {
-        "id": "3475326b-6274-421e-a014-4e6785d21aee",
+        "id": "212f7a02-9d4d-4773-8061-874db4c5aee7",
         "username": "meta",
         "email": "meta@moodai.dev",
         "password": "8947362ccbbc21ff342b0e4b4307faa5dec72b623bb620e1ee3fe3b52be54390",
@@ -16,11 +16,11 @@
         "role": "meta-user"
     },
     {
-        "id": "6d183016-5c37-457c-bc4e-4c197ad0dbf4",
-        "username": "dark_knight",
+        "id": "3ba1b084-8663-45c8-9c33-7a756e4e3cc7",
+        "username": "ahmadsagebhopal@gmail.com",
         "email": "ahmadsagebhopal@gmail.com",
-        "password": "b1970e5aff627cdfb848394e929672626321b111f41b3850320152326613499a",
-        "fullName": "Ahmad Ansari",
+        "password": "6f8ed7b7c049c77debc94420a90f0bd108ec0caf9761c37ec18983eec2c785b5",
+        "fullName": "Ahmad Shoaib Ansari",
         "role": "user"
     }
 ]

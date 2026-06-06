@@ -1,0 +1,28 @@
+# .gitignore for Mood-Detection-AI project
+# Exclude default credentials and sensitive files
+CREDENTIALS.md
+
+# Python virtual environment
+venv/
+
+# Byte-compiled / optimized Python files
+__pycache__/
+*.pyc
+
+# Environment variable files
+.env
+.env.*
+
+# IDE/editor directories
+.idea/
+.vscode/
+
+# Runtime learning & feedback data (user-generated)
+learning_data/predictions.json
+learning_data/corrections.json
+learning_data/activity_logs.json
+
+# User credentials & live sessions (sensitive)
+database/users.json
+database/sessions.json
+

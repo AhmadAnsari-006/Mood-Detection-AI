@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "id": "178c7257-7aba-46d2-9002-cd4c4ea14481",
+        "predictionId": "a43f4d26-804d-4cd2-945f-f0205dfb9dce",
+        "userId": "212f7a02-9d4d-4773-8061-874db4c5aee7",
+        "username": "meta",
+        "sentence": "hello my name is Ahmed",
+        "predictedEmotion": "sadness",
+        "correctEmotion": "Neutral",
+        "confidence": 0.6452,
+        "timestamp": "2026-06-06T14:36:43.862475",
+        "status": "approved"
+    }
+]

@@ -227,9 +227,9 @@ async function loadOverviewData() {
 }
 
 function renderOverviewCharts(data) {
-    const HSL_CSS_PRIMARY = "#7c4dff";
-    const HSL_CSS_ACCENT = "#00e5ff";
-    const HSL_CSS_RED = "#ff1744";
+    const HSL_CSS_PRIMARY = "#0d5c3a"; // Deep Emerald Green
+    const HSL_CSS_ACCENT = "#00ff66";  // Neon Green
+    const HSL_CSS_RED = "#ff3344";     // Neon Red/Pink for mismatches
 
     // 1. Accuracy Trend Chart
     const trendCtx = document.getElementById("accuracyTrendChart").getContext("2d");
@@ -248,7 +248,7 @@ function renderOverviewCharts(data) {
                     label: "Accuracy %",
                     data: accuracies.length > 0 ? accuracies : [100],
                     borderColor: HSL_CSS_ACCENT,
-                    backgroundColor: "rgba(0, 229, 255, 0.1)",
+                    backgroundColor: "rgba(0, 255, 102, 0.06)",
                     borderWidth: 3,
                     fill: true,
                     tension: 0.3,
@@ -258,7 +258,7 @@ function renderOverviewCharts(data) {
                     label: "Feedback Count",
                     data: volumes.length > 0 ? volumes : [0],
                     borderColor: HSL_CSS_PRIMARY,
-                    backgroundColor: "rgba(124, 77, 255, 0.2)",
+                    backgroundColor: "rgba(13, 92, 58, 0.4)",
                     borderWidth: 2,
                     type: "bar",
                     yAxisID: "y1"
@@ -274,22 +274,22 @@ function renderOverviewCharts(data) {
                     position: "left",
                     min: 0,
                     max: 100,
-                    grid: { color: "rgba(255,255,255,0.05)" },
-                    ticks: { color: "#8a99ad" }
+                    grid: { color: "rgba(0, 255, 102, 0.04)" },
+                    ticks: { color: "#7fa192" }
                 },
                 y1: {
                     type: "linear",
                     position: "right",
                     grid: { drawOnChartArea: false },
-                    ticks: { color: "#8a99ad", stepSize: 1 }
+                    ticks: { color: "#7fa192", stepSize: 1 }
                 },
                 x: {
-                    grid: { color: "rgba(255,255,255,0.05)" },
-                    ticks: { color: "#8a99ad" }
+                    grid: { color: "rgba(0, 255, 102, 0.04)" },
+                    ticks: { color: "#7fa192" }
                 }
             },
             plugins: {
-                legend: { labels: { color: "#ffffff" } }
+                legend: { labels: { color: "#e2f1eb" } }
             }
         }
     });
@@ -308,8 +308,8 @@ function renderOverviewCharts(data) {
             datasets: [{
                 data: emCounts.length > 0 ? emCounts : [1],
                 backgroundColor: [
-                    "#ff1744", "#00e5ff", "#7c4dff", "#00e676", 
-                    "#ffea00", "#ff9100", "#d500f9", "#3d5afe"
+                    "#00ff66", "#00dd55", "#00aa44", "#00f0ff", 
+                    "#00bfa5", "#00796b", "#004d40", "#123524"
                 ],
                 borderWidth: 0
             }]
@@ -320,7 +320,7 @@ function renderOverviewCharts(data) {
             plugins: {
                 legend: {
                     position: "right",
-                    labels: { color: "#ffffff" }
+                    labels: { color: "#e2f1eb" }
                 }
             }
         }
@@ -350,12 +350,12 @@ function renderOverviewCharts(data) {
             maintainAspectRatio: false,
             scales: {
                 x: {
-                    grid: { color: "rgba(255,255,255,0.05)" },
-                    ticks: { color: "#8a99ad", stepSize: 1 }
+                    grid: { color: "rgba(0, 255, 102, 0.04)" },
+                    ticks: { color: "#7fa192", stepSize: 1 }
                 },
                 y: {
                     grid: { display: false },
-                    ticks: { color: "#8a99ad" }
+                    ticks: { color: "#7fa192" }
                 }
             },
             plugins: {
